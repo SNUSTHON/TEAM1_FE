@@ -6,13 +6,15 @@ const client = axios.create({
   baseURL,
   headers: {
     withCredentials: true,
-    Authorization: `Bearer ${localStorage.getItem("jwt")}` ?? null,
+    Authorization: localStorage.getItem("jwt")
+      ? `Bearer ${localStorage.getItem("jwt")}`
+      : null,
   },
 });
 
 export function applyToken(jwt) {
   localStorage.setItem("jwt", jwt);
-  client.defaults.headers.Authorization = `Bearer ${jwt}`;
+  // client.defaults.headers.Authorization = `Bearer ${jwt}`;
 }
 
 export function clearToken() {
