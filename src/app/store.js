@@ -37,7 +37,7 @@ const useStore = createWithEqualityFn((set, get) => ({
         memos: data[0].memos,
       },
       position: {
-        x: position.x,
+        x: position.x + 50,
         y: position.y - 40,
       },
       parentId: parentNode.id,
@@ -51,7 +51,7 @@ const useStore = createWithEqualityFn((set, get) => ({
         memos: data[1].memos,
       },
       position: {
-        x: position.x,
+        x: position.x + 50,
         y: position.y - 20,
       },
       parentId: parentNode.id,
@@ -65,7 +65,7 @@ const useStore = createWithEqualityFn((set, get) => ({
         memos: data[2].memos,
       },
       position: {
-        x: position.x,
+        x: position.x + 50,
         y: position.y - 0,
       },
       parentId: parentNode.id,
@@ -79,7 +79,7 @@ const useStore = createWithEqualityFn((set, get) => ({
         memos: data[3].memos,
       },
       position: {
-        x: position.x,
+        x: position.x + 50,
         y: position.y + 20,
       },
       parentId: parentNode.id,
@@ -94,7 +94,7 @@ const useStore = createWithEqualityFn((set, get) => ({
         memos: data[4].memos,
       },
       position: {
-        x: position.x,
+        x: position.x + 50,
         y: position.y + 40,
       },
       parentId: parentNode.id,

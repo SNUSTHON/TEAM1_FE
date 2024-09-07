@@ -46,7 +46,7 @@ function MindMapNode({ id, data }) {
   // 컴포넌트가 렌더링된 후 input 필드에 포커스 설정
   useEffect(() => {
     setTimeout(() => {
-      data.onInitial();
+      // data.onInitial();
       if (inputRef.current) {
         // inputRef.current.focus({ preventScroll: true });
       }
