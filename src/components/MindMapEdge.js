@@ -1,14 +1,22 @@
 import React from "react";
-import { BaseEdge, EdgeProps, getStraightPath } from "@xyflow/react";
+import {
+  BaseEdge,
+  EdgeProps,
+  getSmoothStepPath,
+  Position,
+} from "@xyflow/react";
 
 function MindMapEdge(props) {
   const { sourceX, sourceY, targetX, targetY } = props;
+  console.log(props);
 
-  const [edgePath] = getStraightPath({
+  const [edgePath] = getSmoothStepPath({
     sourceX,
-    sourceY: sourceY + 20,
-    targetX,
+    sourceY,
+    sourcePosition: Position.Right,
+    targetX: targetX + 5,
     targetY,
+    targetPosition: Position.Left,
   });
 
   return <BaseEdge path={edgePath} {...props} />;

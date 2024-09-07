@@ -125,6 +125,7 @@ function Flow() {
       selectionOnDrag
       panOnDrag={panOnDrag}
       selectionMode={SelectionMode.Partial}
+      attributionPosition="bottom-left"
       // width={"50%"}
       // style={{ position: "absolute", right: 0 }}
     >

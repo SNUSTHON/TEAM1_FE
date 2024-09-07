@@ -75,8 +75,8 @@ function MindMapNode({ id, data }) {
       {/* 더블 클릭으로 생성된 childDivs 출력 */}
       {childDivs.map((div) => div)}
 
-      <Handle type="target" position={Position.Top} />
-      <Handle type="source" position={Position.Top} />
+      <Handle type="target" position={Position.Left} />
+      <Handle type="source" position={Position.Right} />
     </>
   );
 }
