@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useLayoutEffect } from "react";
+import React, { useRef, useEffect, useLayoutEffect, useState } from "react";
 import { Handle, Position } from "@xyflow/react";
 
 import useStore from "@/app/store";
@@ -6,7 +6,7 @@ import useStore from "@/app/store";
 function MindMapNode({ id, data }) {
   const inputRef = useRef();
   const updateNodeLabel = useStore((state) => state.updateNodeLabel);
-
+  const [input, setInput] = useState(data.label);
   useLayoutEffect(() => {
     if (inputRef.current) {
       inputRef.current.style.width = `${data.label.length * 8}px`;
@@ -36,8 +36,11 @@ function MindMapNode({ id, data }) {
           </svg>
         </div>
         <input
-          value={data.label}
-          onChange={(evt) => updateNodeLabel(id, evt.target.value)}
+          value={input}
+          onChange={(evt) => {
+            updateNodeLabel(id, evt.target.value);
+            setInput(evt.target.value);
+          }}
           className="input"
           ref={inputRef}
         />

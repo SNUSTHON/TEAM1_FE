@@ -77,3 +77,11 @@ body,
   background: rgba(255, 255, 255, 0.25);
   pointer-events: all;
 }
+
+.sidebar {
+  width: 230px;
+  height: 100%;
+  background-color: red;
+  /* position: absolute; */
+  z-index: 99;
+}

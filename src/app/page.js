@@ -8,6 +8,7 @@ import {
   useReactFlow,
   ReactFlowProvider,
   ConnectionLineType,
+  SelectionMode,
 } from "@xyflow/react";
 import { shallow } from "zustand/shallow";
 
@@ -42,9 +43,11 @@ function Flow() {
     selector,
     shallow
   );
+
   const connectingNodeId = useRef(null);
   const store = useStoreApi();
   const { screenToFlowPosition } = useReactFlow();
+  console.log(nodes);
 
   const getChildNodePosition = (event, parentNode) => {
     const { domNode } = store.getState();
@@ -102,7 +105,7 @@ function Flow() {
     },
     [getChildNodePosition]
   );
-
+  const panOnDrag = [1, 2];
   return (
     <ReactFlow
       nodes={nodes}
@@ -118,19 +121,42 @@ function Flow() {
       defaultEdgeOptions={defaultEdgeOptions}
       connectionLineType={ConnectionLineType.Straight}
       fitView
+      panOnScroll
+      selectionOnDrag
+      panOnDrag={panOnDrag}
+      selectionMode={SelectionMode.Partial}
+      // width={"50%"}
+      // style={{ position: "absolute", right: 0 }}
     >
       <Controls showInteractive={false} />
-      <Panel position="top-left" className="header">
-        React Flow Mind Map
-      </Panel>
+      <Panel position="top-left" className="header"></Panel>
     </ReactFlow>
   );
 }
-
+const SideBar = () => {
+  const { nodes } = useStore();
+  return (
+    <div className="sidebar">
+      <ul>
+        {nodes.map((item, idx) => (
+          <li key={idx}>{item.data.label}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 export default function Page() {
   return (
     <ReactFlowProvider>
-      <div style={{ width: "100vw", height: "100vh" }}>
+      <div
+        style={{
+          width: "100vw",
+          height: "100vh",
+          display: "flex",
+          flexDirection: "row",
+        }}
+      >
+        <SideBar />
         <Flow />
       </div>
     </ReactFlowProvider>
