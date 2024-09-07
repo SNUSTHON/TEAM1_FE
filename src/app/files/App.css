@@ -118,10 +118,26 @@
 }
 
 .footer {
+  position: relative;
   margin-top: 32px;
   padding: 16px 0;
-  text-align: center;
+  text-align: left;
   font-size: 14px;
   color: #6B7280;
   border-top: 1px solid #e5e7eb;
+}
+
+/* Button styling */
+.btn {
+  position: absolute;
+  display: inline-block;
+  top: 30px;  /* 위에서 10px 떨어짐 */
+  right: 0px; /* 왼쪽에서 10px 떨어짐 */
+  width: 7rem;
+  height: 2rem;
+  font-size: 1rem;
+  border: 2px solid #b9bec6; /* 테두리 두께와 색상 */
+  color: #989da6;
+  border-radius: 10px;
+  cursor: pointer;
 }
