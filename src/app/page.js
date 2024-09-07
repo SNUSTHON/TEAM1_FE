@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import {
   ReactFlow,
   Controls,
@@ -135,13 +135,18 @@ function Flow() {
 }
 const SideBar = () => {
   const { nodes } = useStore();
+  const [keyword, setKeyword] = useState("");
   return (
     <div className="sidebar">
+      <input value={keyword} onChange={(evt) => setKeyword(evt.target.value)} />
       <ul>
-        {nodes.map((item, idx) => (
-          <li key={idx}>{item.data.label}</li>
-        ))}
+        {keyword === ""
+          ? nodes.map((item, idx) => <li key={idx}>{item.data.label}</li>)
+          : nodes
+              .filter((text) => text.data.label.includes(keyword))
+              .map((item, idx) => <li key={idx}>{item.data.label}</li>)}
       </ul>
+      <div>단어 갯수 : {nodes.length}</div>
     </div>
   );
 };
