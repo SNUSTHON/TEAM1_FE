@@ -1,12 +1,14 @@
 import React, { useRef, useEffect, useLayoutEffect, useState } from "react";
 import { Handle, Position } from "@xyflow/react";
 import useStore from "@/app/store";
+import { useExpandCard } from "@/app/hooks/useCard";
 
 function MindMapNode({ id, data }) {
   const inputRef = useRef();
   const updateNodeLabel = useStore((state) => state.updateNodeLabel);
   const [input, setInput] = useState(data.label);
   const [childDivs, setChildDivs] = useState([]);
+  const { mutate: expandCard, data: cardData } = useExpandCard();
 
   // Canvas API를 사용하여 문자열의 실제 너비 계산
   const calculateTextWidth = (text) => {
@@ -28,30 +30,32 @@ function MindMapNode({ id, data }) {
   useEffect(() => {
     setTimeout(() => {
       if (inputRef.current) {
-        inputRef.current.focus({ preventScroll: true });
+        // inputRef.current.focus({ preventScroll: true });
       }
     }, 1);
   }, []);
 
+  async function expandNode() {
+    await expandCard(77);
+    console.log(cardData);
+  }
+
   // 더블 클릭 시 childDiv 생성
   const handleDoubleClick = () => {
-    setChildDivs((prevDivs) => [
-      ...prevDivs,
-      <div key={prevDivs.length} className="childDiv">
-        Child Div {prevDivs.length + 1}
-      </div>,
-    ]);
-    if (inputRef.current) {
-      inputRef.current.focus({ preventScroll: true });
-    }
-    console.log(childDivs);
+    expandNode();
+    // setChildDivs((prevDivs) => [
+    //   ...prevDivs,
+    //   <div key={prevDivs.length} className="childDiv">
+    //     Child Div {prevDivs.length + 1}
+    //   </div>,
+    // ]);
+    // console.log(childDivs);
   };
 
   return (
     <>
       <div className="inputWrapper" onDoubleClick={handleDoubleClick}>
-        <div className="dragHandle">
-          {/* icon taken from grommet https://icons.grommet.io */}
+        {/* <div className="">
           <svg viewBox="0 0 24 24">
             <path
               fill="#333"
@@ -60,8 +64,8 @@ function MindMapNode({ id, data }) {
               d="M15 5h2V3h-2v2zM7 5h2V3H7v2zm8 8h2v-2h-2v2zm-8 0h2v-2H7v2zm8 8h2v-2h-2v2zm-8 0h2v-2H7v2z"
             />
           </svg>
-        </div>
-        <input
+        </div> */}
+        {/* <input
           value={input}
           onChange={(evt) => {
             updateNodeLabel(id, evt.target.value);
@@ -69,14 +73,11 @@ function MindMapNode({ id, data }) {
           }}
           className="input"
           ref={inputRef}
-        />
+        /> */}
       </div>
 
       {/* 더블 클릭으로 생성된 childDivs 출력 */}
-      {childDivs.map((div) => div)}
-
-      <Handle type="target" position={Position.Left} />
-      <Handle type="source" position={Position.Right} />
+      {/* {childDivs.map((div) => div)} */}
     </>
   );
 }

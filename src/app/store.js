@@ -1,8 +1,8 @@
 import { applyNodeChanges, applyEdgeChanges } from "@xyflow/react";
-import { create } from "zustand";
+import { createWithEqualityFn } from "zustand/traditional";
 import { nanoid } from "nanoid/non-secure";
 
-const useStore = create((set, get) => ({
+const useStore = createWithEqualityFn((set, get) => ({
   nodes: [
     {
       id: "root",
