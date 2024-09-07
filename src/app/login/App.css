@@ -1,120 +1,120 @@
 /* General container styling */
 .container {
-	display: flex;
-	height: 100vh;
-  }
-  
-  /* Left section with the form */
-  .left-section {
-	background-color: #1D4ED8;
-	color: white;
-	width: 50%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: flex-start;
-	padding-left: 8rem;
-  }
-  
-  .logo {
-	position: absolute; /* 부모 컨테이너의 기준으로 위치 설정 */
-	font-weight: bold;
-	top: 8rem;  /* 위에서 10px 떨어짐 */
-	left: 8rem; /* 왼쪽에서 10px 떨어짐 */
-	color: #FEF08A;
-	font-size: 2rem;
-	margin-bottom: 0;
-  }
-  
-  h1 {
-	font-size: 2.5rem;
-	margin-bottom: 1rem;
-	color: #FEF08A;
-
-  }
-  
-  p {
-	font-size: 1.2rem;
-	margin-bottom: 2rem;
-	line-height: 1.5;
-  }
-  
-  .highlight {
-	color: #f5e842;
-  }
-  
-  /* Form styling */
-  .login-form {
-	width: 100%;
-	max-width: 400px;
-  }
-  
-  .login-form input {
-	width: 100%;
-	padding: 15px;
-	margin-bottom: 15px;
-	border-radius: 5px;
-	border: none;
-  }
-  
-  .form-options {
-	justify-content: space-between;
-	align-items: center;
-	margin-bottom: 20px;
-	width: 400px;
-	padding: 15px;
-  }
-  
-  .form-options label {
-	display: inline-flex;
-	white-space: nowrap;  /* 줄넘김 방지 */
+  display: flex;
+  height: 100vh;
 }
-  
-  .form-options a {
-	margin-left: 10rem;
-	color: white;
-  }
-  
-  /* Button styling */
-  .buttons {
-	width: 430px;
-	justify-content: space-between;
-  }
-  
-  .login-btn {
-	background-color: #FEF08A;
-	color: #1D4ED8;
-	border: none;
-	padding: 10px 30px;
-	cursor: pointer;
-	border-radius: 10px;
-	font-size: 1rem;
-  }
-  
-  .signup-btn {
-	background-color: white;
-	color: #1D4ED8;
-	border: none;
-	padding: 10px 30px;
-	margin: 20px;
-	cursor: pointer;
-	border-radius: 10px;
-	font-size: 1rem;
-  }
-  
-  /* Right section */
-  .right-section {
-	width: 50%;
-	background-color: #1D4ED8;
-	position: relative;
-  }
-  
-  .right-image {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	opacity: 0.8; /* You can adjust the opacity for blending with the blue background */
-  }
+
+/* Left section with the form */
+.left-section {
+  background-color: #1d4ed8;
+  color: white;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding-left: 8rem;
+}
+
+.logo {
+  position: absolute; /* 부모 컨테이너의 기준으로 위치 설정 */
+  font-weight: bold;
+  top: 8rem; /* 위에서 10px 떨어짐 */
+  left: 8rem; /* 왼쪽에서 10px 떨어짐 */
+  color: #fef08a;
+  font-size: 2rem;
+  margin-bottom: 0;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #fef08a;
+}
+
+p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.highlight {
+  color: #f5e842;
+}
+
+/* Form styling */
+.login-form {
+  width: 100%;
+  max-width: 400px;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: none;
+}
+
+.form-options {
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 400px;
+  padding: 15px;
+}
+
+.form-options label {
+  display: inline-flex;
+  white-space: nowrap; /* 줄넘김 방지 */
+}
+
+.form-options a {
+  margin-left: 10rem;
+  color: white;
+}
+
+/* Button styling */
+.buttons {
+  width: 430px;
+  justify-content: space-between;
+}
+
+.login-btn {
+  background-color: #fef08a;
+  color: #1d4ed8;
+  border: none;
+  padding: 10px 30px;
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
+.signup-btn {
+  background-color: white;
+  color: #1d4ed8;
+  border: none;
+  padding: 10px 30px;
+  margin: 20px;
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: 1rem;
+  text-decoration: none;
+}
+
+/* Right section */
+.right-section {
+  width: 50%;
+  background-color: #1d4ed8;
+  position: relative;
+}
+
+.right-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.8; /* You can adjust the opacity for blending with the blue background */
+}

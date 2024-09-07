@@ -1,9 +1,12 @@
 import axios from "axios";
 
-const baseURL = "http://43.202.249.224:8080";
+const baseURL = "http://yhcho.ddns.net:8082";
 
 const client = axios.create({
   baseURL,
+  headers: {
+    withCredentials: true,
+  },
 });
 
 export function applyToken(jwt) {
