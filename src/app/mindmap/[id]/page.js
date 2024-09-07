@@ -1,12 +1,22 @@
 "use client";
-import React from "react";
-import { ReactFlowProvider } from "@xyflow/react";
+import React, { useCallback, useRef, useState } from "react";
+import {
+  ConnectionLineType,
+  Controls,
+  Panel,
+  ReactFlow,
+  ReactFlowProvider,
+  SelectionMode,
+  useReactFlow,
+  useStoreApi,
+} from "@xyflow/react";
 import MindMapFlow from "./MindMapFlow";
 
 import MindMapNode from "@/components/MindMapNode";
 import MindMapEdge from "@/components/MindMapEdge";
 import "@xyflow/react/dist/style.css";
 import useStore from "@/app/store";
+import { shallow } from "zustand/shallow";
 
 const selector = (state) => ({
   nodes: state.nodes,

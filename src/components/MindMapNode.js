@@ -105,11 +105,6 @@ function MindMapNode({ id, data }) {
       }
     }
   }, [getChildNodePosition]);
-
-
-function MindMapNode({ data }) {
-  return (
-  );
 }
 
 export default MindMapNode;
