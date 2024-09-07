@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import "./App.css";
+import "./login.css";
 import Image from "next/image";
 import useLogin from "../hooks/useLogin";
 import Link from "next/link";
@@ -14,8 +14,10 @@ export default function Page() {
   const onSubmit = async () => {
     event.preventDefault();
     if (!isLoading) {
-      if (username && password) await login({ username, password });
-      if (isSuccess) router.push("/");
+      if (username && password) {
+        await login({ username, password });
+        if (isSuccess) router.push("/files");
+      }
     }
   };
   return (

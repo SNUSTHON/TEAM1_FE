@@ -2,14 +2,14 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import FilesClient from "./FilesClient";
-import "./App.css";
+import styles from "./files.module.css";
 
 import logoSvg from "./logo.png";
 
 export default function Page() {
   return (
     <div className="container">
-      <header className="header">
+      <header className={styles.header}>
         <div className="logo">
           <Image src={logoSvg} alt="Thinkwave" width={40} height={40} />
           <h1>Thinkwave</h1>

@@ -7,13 +7,14 @@ import { useReadCanvases, useCreateCanvas } from "@/app/hooks/useCanvas";
 import defaultAvatarSvg from "./default-avatar.png";
 import defaultCanvasSvg from "./default-canvas.png";
 import { clearToken } from "../api/client";
+import { useRouter } from "next/navigation";
 
 export default function FilesClient() {
   const [username, setUsername] = useState("");
   const [canvases, setCanvases] = useState([]);
   const { mutate: readCanvases, data: canvasesData } = useReadCanvases();
   const { mutate: createCanvas } = useCreateCanvas();
-
+  const router = useRouter();
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
     if (storedUsername) {
@@ -84,7 +85,14 @@ export default function FilesClient() {
       </div>
       <footer className="footer">
         Copyright © SNUSTHON TEAM1(Thinkwave). All rights reserved.
-        <button className="btn" onClick={() => clearToken()}>
+        <button
+          className="btn"
+          onClick={() => {
+            clearToken();
+            router.push("/onboarding");
+            router.refresh();
+          }}
+        >
           Log out
         </button>
       </footer>

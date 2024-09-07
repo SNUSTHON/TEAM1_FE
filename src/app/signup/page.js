@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import "./App.css";
+import styles from "./signup.module.css";
 import Image from "next/image";
 import useRegister from "../hooks/useRegister";
 import { useRouter } from "next/navigation";
@@ -23,11 +23,11 @@ export default function App() {
     }
   };
   return (
-    <div className="container">
-      <div className="left-section">
-        <h1>시작해볼까요?</h1>
-        <form className="signup-form">
-          <div className="form-group">
+    <div className={styles.container}>
+      <div className={styles.leftSection}>
+        <h1 className="h1">시작해볼까요?</h1>
+        <form className={styles.signupForm}>
+          <div className={styles.formGroup}>
             <label htmlFor="name">이름</label>
             <input
               type="text"
@@ -36,7 +36,7 @@ export default function App() {
               onChange={(evt) => setUsername(evt.target.value)}
             />
           </div>
-          <div className="form-group">
+          <div className={styles.formGroup}>
             <label htmlFor="email">이메일</label>
             <input
               type="email"
@@ -45,7 +45,7 @@ export default function App() {
               onChange={(evt) => setEmail(evt.target.value)}
             />
           </div>
-          <div className="form-group">
+          <div className={styles.formGroup}>
             <label htmlFor="password">비밀번호</label>
             <input
               type="password"
@@ -54,7 +54,7 @@ export default function App() {
               onChange={(evt) => setPassword(evt.target.value)}
             />
           </div>
-          <div className="form-group">
+          <div className={styles.formGroup}>
             <label htmlFor="confirm-password">비밀번호 확인</label>
             <input
               type="password"
@@ -63,16 +63,16 @@ export default function App() {
               onChange={(evt) => setConfirmPassword(evt.target.value)}
             />
           </div>
-          <button type="submit" className="signup-btn" onClick={onSubmit}>
+          <button type="submit" className={styles.signupBtn} onClick={onSubmit}>
             Sign Up
           </button>
         </form>
       </div>
-      <div className="right-section">
+      <div className={styles.rightSection}>
         <Image
           src={require("../login/login.svg")}
           alt="Background"
-          className="right-image"
+          className={styles.rightImage}
         />
       </div>
     </div>

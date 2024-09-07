@@ -1,5 +1,5 @@
 import React from "react";
-import "./App.css";
+import "./onboarding.css";
 import Link from "next/link";
 
 export default function Page() {
