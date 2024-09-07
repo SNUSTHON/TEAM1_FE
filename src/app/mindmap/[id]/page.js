@@ -1,16 +1,7 @@
 "use client";
-import React, { useCallback, useRef, useState } from "react";
-import {
-  ReactFlow,
-  Controls,
-  Panel,
-  useStoreApi,
-  useReactFlow,
-  ReactFlowProvider,
-  ConnectionLineType,
-  SelectionMode,
-} from "@xyflow/react";
-import { shallow } from "zustand/shallow";
+import React from "react";
+import { ReactFlowProvider } from "@xyflow/react";
+import MindMapFlow from "./MindMapFlow";
 
 import MindMapNode from "@/components/MindMapNode";
 import MindMapEdge from "@/components/MindMapEdge";

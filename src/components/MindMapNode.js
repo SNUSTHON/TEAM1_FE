@@ -106,34 +106,9 @@ function MindMapNode({ id, data }) {
     }
   }, [getChildNodePosition]);
 
-  return (
-    <>
-      <div className="inputWrapper" onDoubleClick={handleDoubleClick}>
-        <div className="dragHandle">
-          <svg viewBox="0 0 24 24">
-            <path
-              fill="#333"
-              stroke="#333"
-              strokeWidth="1"
-              d="M15 5h2V3h-2v2zM7 5h2V3H7v2zm8 8h2v-2h-2v2zm-8 0h2v-2H7v2zm8 8h2v-2h-2v2zm-8 0h2v-2H7v2z"
-            />
-          </svg>
-        </div>
-        {/* <input
-          value={input}
-          onChange={(evt) => {
-            updateNodeLabel(id, evt.target.value);
-            setInput(evt.target.value);
-          }}
-          className="input"
-          ref={inputRef}
-        /> */}
-        {data.label}
-      </div>
 
-      {/* 더블 클릭으로 생성된 childDivs 출력 */}
-      {/* {childDivs.map((div) => div)} */}
-    </>
+function MindMapNode({ data }) {
+  return (
   );
 }
 
