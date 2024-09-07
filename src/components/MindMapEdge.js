@@ -6,7 +6,7 @@ function MindMapEdge(props) {
 
   const [edgePath] = getStraightPath({
     sourceX,
-    sourceY,
+    sourceY: sourceY + 20,
     targetX,
     targetY,
   });

@@ -22,18 +22,18 @@ body,
 }
 
 .react-flow__handle.target {
-  /* top: 50%; */
+  top: 50%;
   pointer-events: none;
   opacity: 0;
 }
 
 .react-flow__handle.source {
-  /* top: 0; */
-  /* left: 0; */
+  top: 0;
+  left: 0;
   transform: none;
   background: black;
-  /* height: 100%;
-  width: 14px; */
+  height: 100%;
+  width: 14px;
   border-radius: 2px;
   border: none;
 }

@@ -20,7 +20,7 @@ function MindMapNode({ id, data }) {
   useLayoutEffect(() => {
     if (inputRef.current) {
       const textWidth = calculateTextWidth(data.label);
-      inputRef.current.style.width = `${textWidth}px`; // 여백을 위해 10px 추가
+      inputRef.current.style.width = `${textWidth + 10}px`; // 여백을 위해 10px 추가
     }
   }, [data.label]);
 
@@ -75,8 +75,8 @@ function MindMapNode({ id, data }) {
       {/* 더블 클릭으로 생성된 childDivs 출력 */}
       {childDivs.map((div) => div)}
 
-      <Handle type="target" position={Position.Left} />
-      <Handle type="source" position={Position.Right} />
+      <Handle type="target" position={Position.Top} />
+      <Handle type="source" position={Position.Top} />
     </>
   );
 }
