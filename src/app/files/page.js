@@ -23,6 +23,7 @@ export default function Page() {
 
       <footer className="footer">
         Copyright © SNUSTHON TEAM1(Thinkwave). All rights reserved.
+        <button className="btn">Log out</button>
       </footer>
     </div>
   );
