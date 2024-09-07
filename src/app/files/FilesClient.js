@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useReadCanvases, useCreateCanvas } from "@/app/hooks/useCanvas";
 import styles from "./files.module.css";
 
@@ -94,7 +95,6 @@ export default function FilesClient() {
           ))}
         </div>
       )}
-      
       <footer className={styles.footer}>
         Copyright © SNUSTHON TEAM1(Thinkwave). All rights reserved.
         <button

@@ -3,14 +3,7 @@ import { createWithEqualityFn } from "zustand/traditional";
 import { nanoid } from "nanoid/non-secure";
 
 const useStore = createWithEqualityFn((set, get) => ({
-  nodes: [
-    {
-      id: "root",
-      type: "mindmap",
-      data: { label: "React Flow Mind Map" },
-      position: { x: 0, y: 0 },
-    },
-  ],
+  nodes: [],
   edges: [],
   onNodesChange: (changes) => {
     set({
@@ -46,14 +39,14 @@ const useStore = createWithEqualityFn((set, get) => ({
     set({
       nodes: get().nodes.map((node) => {
         if (node.id === nodeId) {
-          // it's important to create a new object here, to inform React Flow about the changes
           node.data = { ...node.data, label };
         }
-
         return node;
       }),
     });
   },
+  setNodes: (nodes) => set({ nodes }),
+  setEdges: (edges) => set({ edges }),
 }));
 
 export default useStore;

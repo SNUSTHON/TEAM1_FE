@@ -1,15 +1,32 @@
-import React, { useRef, useEffect, useLayoutEffect, useState } from "react";
-import { Handle, Position } from "@xyflow/react";
+import React, {
+  useRef,
+  useEffect,
+  useLayoutEffect,
+  useState,
+  useCallback,
+} from "react";
+import { Handle, Position, useStoreApi } from "@xyflow/react";
 import useStore from "@/app/store";
 import { useExpandCard } from "@/app/hooks/useCard";
+import { shallow } from "zustand/shallow";
 
+const selector = (state) => ({
+  nodes: state.nodes,
+  edges: state.edges,
+  onNodesChange: state.onNodesChange,
+  onEdgesChange: state.onEdgesChange,
+  addChildNode: state.addChildNode,
+});
 function MindMapNode({ id, data }) {
   const inputRef = useRef();
   const updateNodeLabel = useStore((state) => state.updateNodeLabel);
   const [input, setInput] = useState(data.label);
   const [childDivs, setChildDivs] = useState([]);
   const { mutate: expandCard, data: cardData } = useExpandCard();
-
+  const { nodes, edges, onNodesChange, onEdgesChange, addChildNode } = useStore(
+    selector,
+    shallow
+  );
   // Canvas API를 사용하여 문자열의 실제 너비 계산
   const calculateTextWidth = (text) => {
     const canvas = document.createElement("canvas");
@@ -29,33 +46,70 @@ function MindMapNode({ id, data }) {
   // 컴포넌트가 렌더링된 후 input 필드에 포커스 설정
   useEffect(() => {
     setTimeout(() => {
+      // data.onInitial();
       if (inputRef.current) {
         // inputRef.current.focus({ preventScroll: true });
       }
     }, 1);
   }, []);
 
-  async function expandNode() {
-    await expandCard(77);
-    console.log(cardData);
-  }
+  const connectingNodeId = useRef(null);
+  const store = useStoreApi();
+  const getChildNodePosition = (parentNode) => {
+    const { domNode } = store.getState();
 
-  // 더블 클릭 시 childDiv 생성
-  const handleDoubleClick = () => {
-    expandNode();
-    // setChildDivs((prevDivs) => [
-    //   ...prevDivs,
-    //   <div key={prevDivs.length} className="childDiv">
-    //     Child Div {prevDivs.length + 1}
-    //   </div>,
-    // ]);
-    // console.log(childDivs);
+    if (
+      !domNode ||
+      // we need to check if these properites exist, because when a node is not initialized yet,
+      // it doesn't have a positionAbsolute nor a width or height
+      !parentNode?.internals.positionAbsolute ||
+      !parentNode?.measured.width ||
+      !parentNode?.measured.height
+    ) {
+      return;
+    }
+
+    // const isTouchEvent = "touches" in event;
+    // const x = isTouchEvent ? event.touches[0].clientX : event.clientX;
+    // const y = isTouchEvent ? event.touches[0].clientY : event.clientY;
+    // we need to remove the wrapper bounds, in order to get the correct mouse position
+    // const panePosition = screenToFlowPosition({
+    //   x,
+    //   y,
+    // });
+
+    // we are calculating with positionAbsolute here because child nodes are positioned relative to their parent
+    return {
+      x:
+        parentNode.internals.positionAbsolute.x + parentNode.measured.width / 2,
+      y:
+        parentNode.internals.positionAbsolute.y +
+        parentNode.measured.height / 2,
+    };
   };
+  const handleDoubleClick = useCallback(async () => {
+    connectingNodeId.current = id;
+    const { nodeLookup } = store.getState();
+
+    if (connectingNodeId.current) {
+      const parentNode = nodeLookup.get(connectingNodeId.current);
+      const childNodePosition = getChildNodePosition(parentNode);
+
+      if (parentNode && childNodePosition) {
+        await expandCard({
+          cardId: 214,
+          callback: (data) => {
+            addChildNode(parentNode, data, childNodePosition);
+          },
+        });
+      }
+    }
+  }, [getChildNodePosition]);
 
   return (
     <>
       <div className="inputWrapper" onDoubleClick={handleDoubleClick}>
-        {/* <div className="">
+        <div className="dragHandle">
           <svg viewBox="0 0 24 24">
             <path
               fill="#333"
@@ -64,20 +118,9 @@ function MindMapNode({ id, data }) {
               d="M15 5h2V3h-2v2zM7 5h2V3H7v2zm8 8h2v-2h-2v2zm-8 0h2v-2H7v2zm8 8h2v-2h-2v2zm-8 0h2v-2H7v2z"
             />
           </svg>
-        </div> */}
-        {/* <input
-          value={input}
-          onChange={(evt) => {
-            updateNodeLabel(id, evt.target.value);
-            setInput(evt.target.value);
-          }}
-          className="input"
-          ref={inputRef}
-        /> */}
+        </div>
+        {data.label}
       </div>
-
-      {/* 더블 클릭으로 생성된 childDivs 출력 */}
-      {/* {childDivs.map((div) => div)} */}
     </>
   );
 }
