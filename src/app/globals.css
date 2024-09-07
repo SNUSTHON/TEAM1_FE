@@ -31,9 +31,9 @@ body,
   top: 0;
   left: 0;
   transform: none;
-  background: #f6ad55;
+  background: black;
   height: 100%;
-  width: 100%;
+  width: 14px;
   border-radius: 2px;
   border: none;
 }
