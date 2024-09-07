@@ -16,7 +16,7 @@ export function useCreateCanvas() {
       const message =
         error.response?.data?.data?.[0]?.messages[0].message ??
         "캔버스 생성 실패";
-      console.error(message);
+      console.error(message, error);
     },
   });
   return mutation;

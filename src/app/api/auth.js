@@ -6,6 +6,7 @@ export async function register(reqBody) {
 }
 
 export async function login(reqBody) {
+  localStorage.setItem("username", reqBody.username);
   const response = await client.post("/api/auth/login", reqBody);
   return response.data;
 }

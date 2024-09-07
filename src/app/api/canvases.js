@@ -1,7 +1,8 @@
 import client from "./client";
 
-export async function createCanvas(reqBody) {
-  const response = await client.post("/api/canvases", reqBody);
+export async function createCanvas(subjects) {
+  const ecodedSubjects = encodeURIComponent(subjects);
+  const response = await client.post(`/api/canvases?subject=${ecodedSubjects}`);
   return response.data;
 }
 export async function readCanvases() {
