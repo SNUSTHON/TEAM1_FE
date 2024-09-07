@@ -3,14 +3,20 @@ import React, { useState } from "react";
 import "./App.css";
 import Image from "next/image";
 import useLogin from "../hooks/useLogin";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
   const { mutate: login, isLoading, isSuccess } = useLogin();
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
+  const router = useRouter();
   const onSubmit = async () => {
     event.preventDefault();
-    if (username && password) login({ username, password });
+    if (!isLoading) {
+      if (username && password) await login({ username, password });
+      if (isSuccess) router.push("/");
+    }
   };
   return (
     <div className="container">
@@ -46,9 +52,9 @@ export default function Page() {
             <button type="submit" className="login-btn" onClick={onSubmit}>
               Login
             </button>
-            <button type="button" className="signup-btn">
+            <Link href={"/signup"} className="signup-btn">
               Sign Up
-            </button>
+            </Link>
           </div>
         </form>
       </div>

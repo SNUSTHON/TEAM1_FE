@@ -5,7 +5,7 @@ import { login } from "../api/auth";
 export default function useLogin() {
   const mutation = useMutation(login, {
     onSuccess: (data) => {
-      applyToken(data.data.accessToken);
+      applyToken(data);
     },
     onError: (error) => {
       const message =
