@@ -16,6 +16,40 @@ import MindMapNode from "@/components/MindMapNode";
 import MindMapEdge from "@/components/MindMapEdge";
 import "@xyflow/react/dist/style.css";
 import useStore from "./store";
+import Dagre from "@dagrejs/dagre";
+
+const getLayoutedElements = (nodes, edges, options) => {
+  const g = new Dagre.graphlib.Graph().setDefaultEdgeLabel(() => ({}));
+  g.setGraph({
+    rankdir: options.direction,
+    align: "UL",
+  });
+
+  edges.forEach((edge) => g.setEdge(edge.source, edge.target));
+  // console.log(nodes);
+  nodes.forEach((node) =>
+    g.setNode(node.id, {
+      width: node.measured?.width ?? 0,
+      height: node.measured?.height ?? 0,
+    })
+  );
+
+  Dagre.layout(g);
+
+  return {
+    nodes: nodes.map((node) => {
+      const position = g.node(node.id);
+      // We are shifting the dagre node position (anchor=center center) to the top left
+      // so it matches the React Flow node anchor point (top left).
+      const x = position.x - node.measured.width / 2;
+      const y = position.y;
+      console.log();
+
+      return { ...node, position: { x, y } };
+    }),
+    edges,
+  };
+};
 
 const selector = (state) => ({
   nodes: state.nodes,
@@ -23,6 +57,7 @@ const selector = (state) => ({
   onNodesChange: state.onNodesChange,
   onEdgesChange: state.onEdgesChange,
   addChildNode: state.addChildNode,
+  setNodes: state.setNodes,
 });
 
 const nodeTypes = {
@@ -39,15 +74,24 @@ const defaultEdgeOptions = { style: connectionLineStyle, type: "mindmap" };
 
 function Flow() {
   // whenever you use multiple values, you should use shallow for making sure that the component only re-renders when one of the values change
-  const { nodes, edges, onNodesChange, onEdgesChange, addChildNode } = useStore(
-    selector,
-    shallow
-  );
-
+  const { nodes, edges, onNodesChange, onEdgesChange, addChildNode, setNodes } =
+    useStore(selector, shallow);
   const connectingNodeId = useRef(null);
   const store = useStoreApi();
   const { screenToFlowPosition } = useReactFlow();
-  console.log(nodes);
+
+  const onLayout = useCallback(
+    (direction) => {
+      const layouted = getLayoutedElements(nodes, edges, { direction });
+      // console.log(layouted);
+      setNodes(layouted.nodes);
+
+      // window.requestAnimationFrame(() => {
+      //   fitView();
+      // });
+    },
+    [nodes, edges]
+  );
 
   const getChildNodePosition = (event, parentNode) => {
     const { domNode } = store.getState();
@@ -130,6 +174,10 @@ function Flow() {
     >
       <Controls showInteractive={false} />
       <Panel position="top-left" className="header"></Panel>
+      <Panel position="top-right">
+        <button onClick={() => onLayout("TB")}>vertical layout</button>
+        <button onClick={() => onLayout("LR")}>horizontal layout</button>
+      </Panel>
     </ReactFlow>
   );
 }

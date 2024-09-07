@@ -22,6 +22,11 @@ const useStore = create((set, get) => ({
       edges: applyEdgeChanges(changes, get().edges),
     });
   },
+  setNodes: (changes) => {
+    set({
+      nodes: [...changes],
+    });
+  },
   addChildNode: (parentNode, position) => {
     const newNode = {
       id: nanoid(),
