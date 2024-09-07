@@ -2,7 +2,7 @@
 
 .app {
   height: 100vh;
-  background-image: url("./OnBoarding.svg"); /* Replace with your actual background image URL */
+  background-image: url("./OnBoarding.png"); /* Replace with your actual background image URL */
   background-size: cover;
   background-position: center;
   display: flex;

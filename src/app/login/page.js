@@ -60,7 +60,7 @@ export default function Page() {
       </div>
       <div className="right-section">
         <Image
-          src={require("./login.svg")}
+          src={require("./login.png")}
           alt="Right Section Background"
           className="right-image"
         />
