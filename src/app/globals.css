@@ -40,3 +40,17 @@ a {
     color-scheme: dark;
   }
 }
+
+.dark .react-flow__node {
+  background: #777;
+  color: white;
+}
+
+.light .react-flow__node {
+  background: white;
+  color: #111;
+}
+.react-flow__node {
+  width: 300px;
+  height: 30px;
+}
