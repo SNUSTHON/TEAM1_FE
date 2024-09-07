@@ -1,10 +1,10 @@
-import React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import FilesClient from './FilesClient';
-import './App.css';
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import FilesClient from "./FilesClient";
+import "./App.css";
 
-import logoSvg from './logo.png';
+import logoSvg from "./logo.png";
 
 export default function Page() {
   return (
@@ -20,11 +20,6 @@ export default function Page() {
       </header>
 
       <FilesClient />
-
-      <footer className="footer">
-        Copyright © SNUSTHON TEAM1(Thinkwave). All rights reserved.
-        <button className="btn">Log out</button>
-      </footer>
     </div>
   );
 }
