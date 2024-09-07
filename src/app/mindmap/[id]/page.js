@@ -37,7 +37,7 @@ const nodeOrigin = [0.5, 0.5];
 const connectionLineStyle = { stroke: "#F6AD55", strokeWidth: 3 };
 const defaultEdgeOptions = { style: connectionLineStyle, type: "mindmap" };
 
-function Flow() {
+function Flow({ canvasId }) {
   // whenever you use multiple values, you should use shallow for making sure that the component only re-renders when one of the values change
   const { nodes, edges, onNodesChange, onEdgesChange, addChildNode } = useStore(
     selector,
@@ -63,9 +63,9 @@ function Flow() {
       return;
     }
 
-    const isTouchEvent = "touches" in event;
-    const x = isTouchEvent ? event.touches[0].clientX : event.clientX;
-    const y = isTouchEvent ? event.touches[0].clientY : event.clientY;
+    // const isTouchEvent = "touches" in event;
+    // const x = isTouchEvent ? event.touches[0].clientX : event.clientX;
+    // const y = isTouchEvent ? event.touches[0].clientY : event.clientY;
     // we need to remove the wrapper bounds, in order to get the correct mouse position
     const panePosition = screenToFlowPosition({
       x,
@@ -75,11 +75,8 @@ function Flow() {
     // we are calculating with positionAbsolute here because child nodes are positioned relative to their parent
     return {
       x:
-        panePosition.x -
-        parentNode.internals.positionAbsolute.x +
-        parentNode.measured.width / 2,
+        parentNode.internals.positionAbsolute.x + parentNode.measured.width / 2,
       y:
-        panePosition.y -
         parentNode.internals.positionAbsolute.y +
         parentNode.measured.height / 2,
     };
@@ -134,7 +131,7 @@ function Flow() {
     </ReactFlow>
   );
 }
-const SideBar = () => {
+const SideBar = ({ params }) => {
   const { nodes } = useStore();
   const [keyword, setKeyword] = useState("");
   return (
@@ -162,8 +159,8 @@ export default function Page({ params }) {
           flexDirection: "row",
         }}
       >
-        <SideBar />
-        <Flow />
+        <SideBar canvasId={params.id} />
+        <Flow canvasId={params.id} />
       </div>
     </ReactFlowProvider>
   );

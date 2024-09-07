@@ -7,7 +7,7 @@ export async function createCard({ canvasId, content }) {
   return response.data;
 }
 
-export async function expandCard(cardId) {
+export async function expandCard({ cardId, callback }) {
   const response = await client.post(`/api/cards/${cardId}/expand`);
   return response.data;
 }

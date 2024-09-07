@@ -97,7 +97,7 @@ export default function Page() {
       </button>
       <button
         onClick={async () => {
-          await createCardMemo({ cardId: "77", content: "하이하이" });
+          await createCardMemo({ cardId: "213", content: "하이하이" });
         }}
       >
         메모 생성

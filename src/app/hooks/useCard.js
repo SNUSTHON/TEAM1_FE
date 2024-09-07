@@ -27,8 +27,9 @@ export function useCreateMainCard() {
 
 export function useExpandCard() {
   const mutation = useMutation(expandCard, {
-    onSuccess: (data) => {
+    onSuccess: (data, variables) => {
       console.log(data);
+      variables.callback(data);
     },
     onError: (error) => {
       const message =
