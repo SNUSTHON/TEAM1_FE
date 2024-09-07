@@ -13,17 +13,23 @@ import {
 
 export function useCreateMainCard() {
   const mutation = useMutation(createCard, {
-    onSuccess: (data) => {
-      console.log(data);
+    onSuccess: (data, variables, context) => {
+      console.log("Main card created successfully:", data);
+      if (context && typeof context.onSuccess === 'function') {
+        context.onSuccess(data);
+      }
     },
-    onError: (error) => {
-      const message =
-        error.response?.data?.data?.[0]?.messages[0].message ?? "카드 생 실패";
-      console.error(message);
+    onError: (error, variables, context) => {
+      console.error("Failed to create main card:", error);
+      if (context && typeof context.onError === 'function') {
+        context.onError(error);
+      }
     },
   });
   return mutation;
 }
+
+// ... (other hooks remain unchanged)
 
 export function useExpandCard() {
   const mutation = useMutation(expandCard, {

@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useReadCanvases, useCreateCanvas } from "@/app/hooks/useCanvas";
 import styles from "./files.module.css";
 
@@ -59,21 +60,23 @@ export default function FilesClient() {
 
       <div className={styles.canvasGrid}>
         {canvases.map((canvas) => (
-          <div key={canvas.id} className={styles.canvasItem}>
-            <Image
-              src={defaultCanvasSvg}
-              alt={canvas.subject}
-              width={300}
-              height={200}
-              className={styles.canvasImage}
-            />
-            <div className={styles.canvasInfo}>
-              <h3 className={styles.canvasTitle}>{canvas.subject}</h3>
-              <p className={styles.canvasDate}>
-                Edited {new Date(canvas.updatedAt).toLocaleString()}
-              </p>
+          <Link href={`/mindmap/${canvas.id}`} key={canvas.id}>
+            <div className={styles.canvasItem}>
+              <Image
+                src={defaultCanvasSvg}
+                alt={canvas.subject}
+                width={300}
+                height={200}
+                className={styles.canvasImage}
+              />
+              <div className={styles.canvasInfo}>
+                <h3 className={styles.canvasTitle}>{canvas.subject}</h3>
+                <p className={styles.canvasDate}>
+                  Edited {new Date(canvas.updatedAt).toLocaleString()}
+                </p>
+              </div>
             </div>
-          </div>
+          </Link>
         ))}
         {[...Array(3)].map((_, index) => (
           <div
