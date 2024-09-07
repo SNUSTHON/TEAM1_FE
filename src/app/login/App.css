@@ -18,6 +18,7 @@
   
   .logo {
 	position: absolute; /* 부모 컨테이너의 기준으로 위치 설정 */
+	font-weight: bold;
 	top: 8rem;  /* 위에서 10px 떨어짐 */
 	left: 8rem; /* 왼쪽에서 10px 떨어짐 */
 	color: #FEF08A;
