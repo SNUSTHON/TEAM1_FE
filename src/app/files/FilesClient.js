@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 export default function FilesClient() {
   const [username, setUsername] = useState("");
   const [canvases, setCanvases] = useState([]);
+  const [loading, setLoading] = useState(true); // Loading state
   const { mutate: readCanvases, data: canvasesData } = useReadCanvases();
   const { mutate: createCanvas } = useCreateCanvas();
   const router = useRouter();
@@ -29,6 +30,7 @@ export default function FilesClient() {
   useEffect(() => {
     if (canvasesData) {
       setCanvases(canvasesData);
+      setLoading(false); // Stop loading once the data is loaded
     }
   }, [canvasesData]);
 
@@ -58,10 +60,15 @@ export default function FilesClient() {
         <button className={styles.createMemoBtn}>+ New Idea</button>
       </div>
 
-      <div className={styles.canvasGrid}>
-        {canvases.map((canvas) => (
-          <Link href={`/mindmap/${canvas.id}`} key={canvas.id}>
-            <div className={styles.canvasItem}>
+      {/* Loading Spinner */}
+      {loading ? (
+        <div className={styles.loadingSpinner}>
+          <div className={styles.spinner}></div> {/* CSS spinner */}
+        </div>
+      ) : (
+        <div className={styles.canvasGrid}>
+          {canvases.map((canvas) => (
+            <div key={canvas.id} className={styles.canvasItem}>
               <Image
                 src={defaultCanvasSvg}
                 alt={canvas.subject}
@@ -76,18 +83,18 @@ export default function FilesClient() {
                 </p>
               </div>
             </div>
-          </Link>
-        ))}
-        {[...Array(3)].map((_, index) => (
-          <div
-            key={`new-${index}`}
-            className={`${styles.canvasItem} ${styles.newCanvas}`}
-            onClick={handleCreateCanvas}
-          >
-            <div className={styles.newCanvasIcon}>+</div>
-          </div>
-        ))}
-      </div>
+          ))}
+          {[...Array(3)].map((_, index) => (
+            <div
+              key={`new-${index}`}
+              className={`${styles.canvasItem} ${styles.newCanvas}`}
+              onClick={handleCreateCanvas}
+            >
+              <div className={styles.newCanvasIcon}>+</div>
+            </div>
+          ))}
+        </div>
+      )}
       <footer className={styles.footer}>
         Copyright © SNUSTHON TEAM1(Thinkwave). All rights reserved.
         <button

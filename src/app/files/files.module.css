@@ -141,3 +141,28 @@
   border-radius: 10px;
   cursor: pointer;
 }
+
+.loadingSpinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+}
+
+.spinner {
+  border: 6px solid rgba(0, 0, 0, 0.1); /* Slightly thicker border */
+  width: 60px; /* Increased width */
+  height: 60px; /* Increased height */
+  border-radius: 50%;
+  border-left-color: #09f;
+  animation: spin 1s ease infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

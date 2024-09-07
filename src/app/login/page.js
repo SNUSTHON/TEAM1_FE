@@ -1,5 +1,6 @@
-"use client";
-import React, { useState } from "react";
+"use client"; // 최상단에 추가합니다.
+
+import React, { useState, useEffect } from "react";
 import styles from "./login.module.css";
 import Image from "next/image";
 import useLogin from "../hooks/useLogin";
@@ -14,13 +15,16 @@ export default function Page() {
   
   const onSubmit = async (event) => {
     event.preventDefault();
-    if (!isLoading) {
-      if (username && password) {
-        await login({ username, password });
-        if (isSuccess) router.push("/files");
-      }
+    if (!isLoading && username && password) {
+      await login({ username, password });
     }
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      router.push("/files");
+    }
+  }, [isSuccess, router]);
 
   return (
     <div className={styles.container}>
