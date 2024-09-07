@@ -70,7 +70,7 @@ export default function App() {
       </div>
       <div className={styles.rightSection}>
         <Image
-          src={require("../login/login.svg")}
+          src={require("../login/login.png")}
           alt="Background"
           className={styles.rightImage}
         />
