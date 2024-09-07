@@ -9,7 +9,7 @@ export default function useRegister() {
     },
     onError: (error) => {
       const message =
-        error.response?.data?.data?.[0]?.messages[0].message ?? "로그인 실패";
+        error.response?.data?.data?.[0]?.messages[0].message ?? "회원가입 실패";
       console.error(message);
     },
   });

@@ -14,7 +14,8 @@ export function useCreateCanvas() {
     },
     onError: (error) => {
       const message =
-        error.response?.data?.data?.[0]?.messages[0].message ?? "로그인 실패";
+        error.response?.data?.data?.[0]?.messages[0].message ??
+        "캔버스 생성 실패";
       console.error(message);
     },
   });
@@ -28,7 +29,8 @@ export function useReadCanvas() {
     },
     onError: (error) => {
       const message =
-        error.response?.data?.data?.[0]?.messages[0].message ?? "로그인 실패";
+        error.response?.data?.data?.[0]?.messages[0].message ??
+        "캔버스 조회 실패";
       console.error(message);
     },
   });
@@ -42,7 +44,8 @@ export function useReadCanvases() {
     },
     onError: (error) => {
       const message =
-        error.response?.data?.data?.[0]?.messages[0].message ?? "로그인 실패";
+        error.response?.data?.data?.[0]?.messages[0].message ??
+        "모든 캔버스 조회 실패";
       console.error(message);
     },
   });
@@ -56,7 +59,8 @@ export function useReadSubjects() {
     },
     onError: (error) => {
       const message =
-        error.response?.data?.data?.[0]?.messages[0].message ?? "로그인 실패";
+        error.response?.data?.data?.[0]?.messages[0].message ??
+        "캔버스 주제 조회 실패";
       console.error(message);
     },
   });
@@ -70,7 +74,8 @@ export function useUpdateCanvas() {
     },
     onError: (error) => {
       const message =
-        error.response?.data?.data?.[0]?.messages[0].message ?? "로그인 실패";
+        error.response?.data?.data?.[0]?.messages[0].message ??
+        "캔버스 수정 실패";
       console.error(message);
     },
   });
@@ -83,7 +88,8 @@ export function useRemoveCanvas() {
     },
     onError: (error) => {
       const message =
-        error.response?.data?.data?.[0]?.messages[0].message ?? "로그인 실패";
+        error.response?.data?.data?.[0]?.messages[0].message ??
+        "캔버스 삭제 실패";
       console.error(message);
     },
   });

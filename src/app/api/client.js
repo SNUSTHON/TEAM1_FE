@@ -4,7 +4,9 @@ const baseURL = "http://yhcho.ddns.net:8082";
 
 const client = axios.create({
   baseURL,
-  withCredentials: true,
+  headers: {
+    withCredentials: true,
+  },
 });
 
 export function applyToken(jwt) {
