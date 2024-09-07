@@ -8,13 +8,13 @@ import logoSvg from "./logo.png";
 
 export default function Page() {
   return (
-    <div className="container">
+    <div className={styles.container}>
       <header className={styles.header}>
-        <div className="logo">
+        <div className={styles.logo}>
           <Image src={logoSvg} alt="Thinkwave" width={40} height={40} />
           <h1>Thinkwave</h1>
         </div>
-        <Link href="/pricing" className="pricing-btn">
+        <Link href="/pricing" className={styles.pricingBtn}>
           요금제
         </Link>
       </header>

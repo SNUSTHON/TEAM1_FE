@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useReadCanvases, useCreateCanvas } from "@/app/hooks/useCanvas";
+import styles from "./files.module.css";
 
 import defaultAvatarSvg from "./default-avatar.png";
 import defaultCanvasSvg from "./default-canvas.png";
@@ -15,6 +16,7 @@ export default function FilesClient() {
   const { mutate: readCanvases, data: canvasesData } = useReadCanvases();
   const { mutate: createCanvas } = useCreateCanvas();
   const router = useRouter();
+
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
     if (storedUsername) {
@@ -40,34 +42,34 @@ export default function FilesClient() {
 
   return (
     <>
-      <div className="profile-section">
+      <div className={styles.profileSection}>
         <Image
           src={defaultAvatarSvg}
           alt="Profile"
           width={60}
           height={60}
-          className="profile-image"
+          className={styles.profileImage}
         />
-        <div className="profile-info">
+        <div className={styles.profileInfo}>
           <h2>반갑습니다 {username}님</h2>
           <p>오늘도 생각을 넓혀볼까요?</p>
         </div>
-        <button className="create-memo-btn">+ New Idea</button>
+        <button className={styles.createMemoBtn}>+ New Idea</button>
       </div>
 
-      <div className="canvas-grid">
+      <div className={styles.canvasGrid}>
         {canvases.map((canvas) => (
-          <div key={canvas.id} className="canvas-item">
+          <div key={canvas.id} className={styles.canvasItem}>
             <Image
               src={defaultCanvasSvg}
               alt={canvas.subject}
               width={300}
               height={200}
-              className="canvas-image"
+              className={styles.canvasImage}
             />
-            <div className="canvas-info">
-              <h3 className="canvas-title">{canvas.subject}</h3>
-              <p className="canvas-date">
+            <div className={styles.canvasInfo}>
+              <h3 className={styles.canvasTitle}>{canvas.subject}</h3>
+              <p className={styles.canvasDate}>
                 Edited {new Date(canvas.updatedAt).toLocaleString()}
               </p>
             </div>
@@ -76,17 +78,17 @@ export default function FilesClient() {
         {[...Array(3)].map((_, index) => (
           <div
             key={`new-${index}`}
-            className="canvas-item new-canvas"
+            className={`${styles.canvasItem} ${styles.newCanvas}`}
             onClick={handleCreateCanvas}
           >
-            <div className="new-canvas-icon">+</div>
+            <div className={styles.newCanvasIcon}>+</div>
           </div>
         ))}
       </div>
-      <footer className="footer">
+      <footer className={styles.footer}>
         Copyright © SNUSTHON TEAM1(Thinkwave). All rights reserved.
         <button
-          className="btn"
+          className={styles.btn}
           onClick={() => {
             clearToken();
             router.push("/onboarding");
