@@ -1,169 +1,46 @@
 "use client";
-import React, { useCallback, useRef, useState } from "react";
-import {
-  ConnectionLineType,
-  Controls,
-  Panel,
-  ReactFlow,
-  ReactFlowProvider,
-  SelectionMode,
-  useReactFlow,
-  useStoreApi,
-} from "@xyflow/react";
-import MindMapFlow from "./MindMapFlow";
+import React, { useEffect, useState } from 'react';
+import { useReadCanvas } from "@/app/hooks/useCanvas";
+import MindMapBlock from '@/components/MindMapBlock';
 
-import MindMapNode from "@/components/MindMapNode";
-import MindMapEdge from "@/components/MindMapEdge";
-import "@xyflow/react/dist/style.css";
-import useStore from "@/app/store";
-import { shallow } from "zustand/shallow";
+export default function MindMapPage({ params }) {
+  const [canvasData, setCanvasData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const { mutate: readCanvas } = useReadCanvas();
 
-const selector = (state) => ({
-  nodes: state.nodes,
-  edges: state.edges,
-  onNodesChange: state.onNodesChange,
-  onEdgesChange: state.onEdgesChange,
-  addChildNode: state.addChildNode,
-});
-
-const nodeTypes = {
-  mindmap: MindMapNode,
-};
-
-const edgeTypes = {
-  mindmap: MindMapEdge,
-};
-
-const nodeOrigin = [0.5, 0.5];
-const connectionLineStyle = { stroke: "#F6AD55", strokeWidth: 3 };
-const defaultEdgeOptions = { style: connectionLineStyle, type: "mindmap" };
-
-function Flow({ canvasId }) {
-  // whenever you use multiple values, you should use shallow for making sure that the component only re-renders when one of the values change
-  const { nodes, edges, onNodesChange, onEdgesChange, addChildNode } = useStore(
-    selector,
-    shallow
-  );
-
-  const connectingNodeId = useRef(null);
-  const store = useStoreApi();
-  const { screenToFlowPosition } = useReactFlow();
-  console.log(nodes);
-
-  const getChildNodePosition = (event, parentNode) => {
-    const { domNode } = store.getState();
-
-    if (
-      !domNode ||
-      // we need to check if these properites exist, because when a node is not initialized yet,
-      // it doesn't have a positionAbsolute nor a width or height
-      !parentNode?.internals.positionAbsolute ||
-      !parentNode?.measured.width ||
-      !parentNode?.measured.height
-    ) {
-      return;
+  useEffect(() => {
+    if (params.id) {
+      setIsLoading(true);
+      readCanvas(params.id, {
+        onSuccess: (data) => {
+          setCanvasData(data);
+          setIsLoading(false);
+        },
+        onError: () => {
+          setIsLoading(false);
+        }
+      });
     }
+  }, [params.id, readCanvas]);
 
-    // const isTouchEvent = "touches" in event;
-    // const x = isTouchEvent ? event.touches[0].clientX : event.clientX;
-    // const y = isTouchEvent ? event.touches[0].clientY : event.clientY;
-    // we need to remove the wrapper bounds, in order to get the correct mouse position
-    const panePosition = screenToFlowPosition({
-      x,
-      y,
-    });
-
-    // we are calculating with positionAbsolute here because child nodes are positioned relative to their parent
-    return {
-      x:
-        parentNode.internals.positionAbsolute.x + parentNode.measured.width / 2,
-      y:
-        parentNode.internals.positionAbsolute.y +
-        parentNode.measured.height / 2,
-    };
+  const handleUpdate = (updatedData) => {
+    setCanvasData(prevData => ({
+      ...prevData,
+      rootCard: updatedData
+    }));
   };
 
-  const onConnectStart = useCallback((_, { nodeId }) => {
-    connectingNodeId.current = nodeId;
-  }, []);
+  if (!canvasData) {
+    return <div>No data available</div>;
+  }
 
-  const onConnectEnd = useCallback(
-    (event) => {
-      const { nodeLookup } = store.getState();
-      const targetIsPane = event.target.classList.contains("react-flow__pane");
-
-      if (targetIsPane && connectingNodeId.current) {
-        const parentNode = nodeLookup.get(connectingNodeId.current);
-        const childNodePosition = getChildNodePosition(event, parentNode);
-
-        if (parentNode && childNodePosition) {
-          addChildNode(parentNode, childNodePosition);
-        }
-      }
-    },
-    [getChildNodePosition]
-  );
-  const panOnDrag = [1, 2];
   return (
-    <ReactFlow
-      nodes={nodes}
-      edges={edges}
-      onNodesChange={onNodesChange}
-      onEdgesChange={onEdgesChange}
-      nodeTypes={nodeTypes}
-      edgeTypes={edgeTypes}
-      onConnectStart={onConnectStart}
-      onConnectEnd={onConnectEnd}
-      nodeOrigin={nodeOrigin}
-      connectionLineStyle={connectionLineStyle}
-      defaultEdgeOptions={defaultEdgeOptions}
-      connectionLineType={ConnectionLineType.Straight}
-      fitView
-      panOnScroll
-      selectionOnDrag
-      panOnDrag={panOnDrag}
-      selectionMode={SelectionMode.Partial}
-      attributionPosition="bottom-left"
-      // width={"50%"}
-      // style={{ position: "absolute", right: 0 }}
-    >
-      <Controls showInteractive={false} />
-      <Panel position="top-left" className="header"></Panel>
-    </ReactFlow>
-  );
-}
-const SideBar = ({ params }) => {
-  const { nodes } = useStore();
-  const [keyword, setKeyword] = useState("");
-  return (
-    <div className="sidebar">
-      <input value={keyword} onChange={(evt) => setKeyword(evt.target.value)} />
-      <ul>
-        {keyword === ""
-          ? nodes.map((item, idx) => <li key={idx}>{item.data.label}</li>)
-          : nodes
-              .filter((text) => text.data.label.includes(keyword))
-              .map((item, idx) => <li key={idx}>{item.data.label}</li>)}
-      </ul>
-      <div>단어 갯수 : {nodes.length}</div>
+    <div style={{ padding: '20px' }}>
+      {isLoading && <div style={{ position: 'fixed', top: 0, left: 0, right: 0, backgroundColor: '#ffd700', textAlign: 'center', padding: '5px' }}>Loading...</div>}
+      <h1>{canvasData.subject}</h1>
+      {canvasData.rootCard && (
+        <MindMapBlock card={canvasData.rootCard} onUpdate={handleUpdate} />
+      )}
     </div>
-  );
-};
-export default function Page({ params }) {
-  console.log(params);
-  return (
-    <ReactFlowProvider>
-      <div
-        style={{
-          width: "100vw",
-          height: "100vh",
-          display: "flex",
-          flexDirection: "row",
-        }}
-      >
-        <SideBar canvasId={params.id} />
-        <Flow canvasId={params.id} />
-      </div>
-    </ReactFlowProvider>
   );
 }
